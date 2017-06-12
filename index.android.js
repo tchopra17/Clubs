@@ -6,7 +6,7 @@ import {
   Text,
   View
 } from 'react-native';
-import Splash from './Splash';
+import Splash from './components/Splash';
 
 export default class Clubs extends Component {
   render() {
