@@ -8,8 +8,19 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
+import firebase from 'firebase'
 
 export default class Login extends Component {
+  constructor() {
+    super();
+    this.state = {
+      user: '',
+      pass: '',
+    }
+  }
+  buttonTapped = () => {
+
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -21,11 +32,15 @@ export default class Login extends Component {
         <View style={styles.loginContainer}>
 
           <TextInput placeholder='E-Mail'
+          autoCapitalize='none'
+          autoCorrect={false}
+          keyboardType='email-address'
           style={styles.loginInput}></TextInput>
           <TextInput placeholder='Password'
+          secureTextEntry
           style={styles.loginInput}></TextInput>
-
-          <TouchableOpacity style={styles.buttonContainer}>
+          <TouchableOpacity
+          style={styles.buttonContainer}>
             <Text style={styles.buttonText}>Login</Text>
           </TouchableOpacity>
         </View>
@@ -46,7 +61,7 @@ const styles = StyleSheet.create({
     paddingTop: 50,
   },
   header: {
-    color: 'yellow',
+    color: 'gold',
     fontWeight: 'bold',
     fontSize: 35,
   },

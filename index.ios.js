@@ -6,13 +6,13 @@ import {
   Text,
   View
 } from 'react-native';
-import Splash from './components/Splash';
-import Login from './components/Login'
+import Splash from './src/components/Splash'
+import Login from './src/components/Login'
 
 export default class Clubs extends Component {
   render() {
     return (
-      <Login />
+        <Login />
     );
   }
 }
