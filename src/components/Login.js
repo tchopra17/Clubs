@@ -8,7 +8,18 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
-import firebase from 'firebase'
+import firebase from 'firebase';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBYXNAawWH_EZi-gWlcBd5PXWswffc7q8k",
+  authDomain: "club-eda9f.firebaseapp.com",
+  databaseURL: "https://club-eda9f.firebaseio.com",
+  projectId: "club-eda9f",
+  storageBucket: "club-eda9f.appspot.com",
+  messagingSenderId: "297879900058"
+}
+const firebaseApp = firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
 
 export default class Login extends Component {
   constructor() {
@@ -18,9 +29,25 @@ export default class Login extends Component {
       pass: '',
     }
   }
-  buttonTapped = () => {
+  createUser(email, password){
+    auth.createUserWithEmailAndPassword(email, password).then((data) => {
+      if (this.props.onLoginSuccess) {
+        this.props.onLoginSuccess(data)
+      }
+    })
+    .catch((error) => {
+      var errorCode = error.code;
+      var errorMessage = error.message;
 
+      if (this.props.onLoginError) {
+        this.props.onLoginError(error.code, error.message)
+      }
+    });
   }
+  buttonTapped = () => {
+    this.createUser(this.state.user, this.state.pass)
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -35,14 +62,19 @@ export default class Login extends Component {
           autoCapitalize='none'
           autoCorrect={false}
           keyboardType='email-address'
+          onChangeText={(user) => this.setState({user})}
+          value={this.state.user}
           style={styles.loginInput}></TextInput>
           <TextInput placeholder='Password'
           secureTextEntry
+          onChangeText={(pass) => this.setState({pass})}
           style={styles.loginInput}></TextInput>
           <TouchableOpacity
+          onPress={() => {this.buttonTapped() }}
           style={styles.buttonContainer}>
             <Text style={styles.buttonText}>Login</Text>
           </TouchableOpacity>
+
         </View>
       </View>
     );
